@@ -26,7 +26,9 @@ namespace ExplorCalifornia
             services.AddTransient<FeatureToggles>(x => new FeatureToggles
             {
                 DeveloperException = configuration.GetValue<bool>("EnableDeveloperException")
-            });;
+            });
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,15 +43,18 @@ namespace ExplorCalifornia
             }
 
             app.UseRouting();
-            app.UseFileServer();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/divyang", async (context) =>
+                endpoints.MapGet("/divyang", async context =>
                 {
                     throw new Exception("Error");
                 });
+
+                endpoints.MapControllerRoute("Default","{controller=Home}/{action=index}/{id?}");
             });
+
+            app.UseFileServer();
         }
     }
 }
