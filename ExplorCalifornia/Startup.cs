@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExplorCalifornia.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExplorCalifornia
 {
@@ -26,6 +28,12 @@ namespace ExplorCalifornia
             services.AddTransient<FeatureToggles>(x => new FeatureToggles
             {
                 DeveloperException = configuration.GetValue<bool>("EnableDeveloperException")
+            });
+
+            services.AddDbContext<BlogDataContext>(options =>
+            {
+                var connectionString = configuration.GetConnectionString("BlogDataContext");
+                options.UseSqlServer(connectionString);
             });
 
             services.AddMvc();
