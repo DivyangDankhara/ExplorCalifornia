@@ -1,25 +1,35 @@
 ﻿@using ExplorCalifornia.Models;
 
-@{
+@{ 
     Layout = "_Layout";
 }
-
-@model Post[]
-
-@section header{
-    <h1>Explore our world your way</h1>
-    <a href="/tours.htm" title="Find your tour!"><h2>Find your tour</h2></a>
-}
+@model IEnumerable<Post>
 
 <h1>Explorer's Blog</h1>
 
 <p>
-    Blow are a few of the latest postes from some of our exolorers.
+    Below are a few of the latest posts from some of our explorers.
 </p>
 
-<div class="blog-post">
+<p class="pager">
+    @if (ViewBag.HasPreviousPage)
+    {
+        <a class="prev" href="@Url.Action("Index", "Blog" , new { page = ViewBag.PreviousPage })">
+            &lt; Previous
+        </a>
+    }
+
+    @if (ViewBag.HasNextPage)
+    {
+        <a class="next" href="@Url.Action("Index", "Blog" , new { page = ViewBag.NextPage })">
+            Next &gt;
+        </a>
+    }
+</p>
+
+<div class="blog-posts">
     @foreach (var post in Model)
     {
-        @await Html.PartialAsync("_Post", post);
+        @await Html.PartialAsync("_Post", post)
     }
 </div>
