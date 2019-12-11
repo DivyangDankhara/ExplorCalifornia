@@ -41,8 +41,8 @@ namespace ExplorCalifornia.Controllers
                     .Take(pageSize)
                     .ToArray();
 
-            //if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-            //    return PartialView(posts);
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return PartialView(posts);
 
             return View(posts);
         }
