@@ -43,7 +43,6 @@ namespace ExplorCalifornia
             services.AddIdentityCore<IdentityUser>().AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<IdentityDataContext>();
 
-
             services.AddMvc();
         }
 
